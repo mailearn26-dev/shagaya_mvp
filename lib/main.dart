@@ -15,6 +15,11 @@ void main() async {
 class ShagayaApp extends StatefulWidget {
   const ShagayaApp({super.key});
 
+  static void setLocale(BuildContext context, Locale locale) {
+    final state = context.findAncestorStateOfType<_ShagayaAppState>();
+    state?.setLocale(locale);
+  }
+
   @override
   State<ShagayaApp> createState() => _ShagayaAppState();
 }
