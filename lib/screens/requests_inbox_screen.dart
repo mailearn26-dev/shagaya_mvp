@@ -62,7 +62,7 @@ class _RequestsInboxScreenState extends State<RequestsInboxScreen> {
               final status = (m['status'] ?? 'PENDING') as String;
 
               return ListTile(
-                title: Text('Product: ${m['productId']}'),
+                title: Text('Product: ${m['productName']}'),
                 subtitle: Text('Qty: ${m['qty'] ?? ''} • $status'),
                 trailing: role == 'farmer'
                     ? Wrap(
