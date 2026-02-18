@@ -5,7 +5,6 @@ import '../services/firestore_service.dart';
 import 'home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class ProfileScreen extends StatefulWidget {
   final String role;
   final String uid;
@@ -75,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         'area': area.text.trim(),
         'lat': lat,
         'lng': lng,
-        'createdAt': DateTime.now().toIso8601String(),
+        'createdAt': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
 
       if (!mounted) return;
