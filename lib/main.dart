@@ -43,7 +43,7 @@ class _ShagayaAppState extends State<ShagayaApp> {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
 
-      home: AuthGate(setLocale: setLocale),
+      home: const AuthGate(),
     );
   }
 }
