@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import 'profile_screen.dart';
+import '../services/firestore_service.dart';
 
 class LoginScreen extends StatefulWidget {
   final String role;
@@ -33,19 +34,31 @@ class _LoginScreenState extends State<LoginScreen> {
           email: email.text.trim(),
           password: password.text.trim(),
         );
+
+        // Create user document after successful registration
+        final fs = FirestoreService();
+        await fs.ensureUserDoc(uid: cred.user!.uid, email: email.text.trim(), role: widget.role);
+        
+        // Navigate to ProfileScreen
+        if (!mounted) return;
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => ProfileScreen(role: widget.role, uid: cred.user!.uid),
+          ),
+        );
       } else {
         cred = await auth.signInWithEmailAndPassword(
           email: email.text.trim(),
           password: password.text.trim(),
         );
-      }
 
-      if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => ProfileScreen(role: widget.role, uid: cred.user!.uid),
-        ),
-      );
+        if (!mounted) return;
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => ProfileScreen(role: widget.role, uid: cred.user!.uid),
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       setState(() => error = 'CODE: ${e.code}\nMSG: ${e.message}');
     } finally {
