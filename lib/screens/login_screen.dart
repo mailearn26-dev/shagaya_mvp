@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import 'profile_screen.dart';
 import '../services/firestore_service.dart';
+import 'auth_gate.dart';
 
 class LoginScreen extends StatefulWidget {
   final String role;
@@ -52,8 +53,12 @@ class _LoginScreenState extends State<LoginScreen> {
           password: password.text.trim(),
         );
 
-        // Removed navigation to ProfileScreen after login
-        // Let AuthGate handle routing
+        // Navigate to AuthGate after successful login
+        if (!mounted) return;
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const AuthGate()),
+          (route) => false,
+        );
       }
     } on FirebaseAuthException catch (e) {
       setState(() => error = 'CODE: ${e.code}\nMSG: ${e.message}');
