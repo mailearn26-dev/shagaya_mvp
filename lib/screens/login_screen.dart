@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final fs = FirestoreService();
         await fs.ensureUserDoc(uid: cred.user!.uid, email: email.text.trim(), role: widget.role);
         
-        // Navigate to ProfileScreen
+        // Navigate to ProfileScreen after sign up
         if (!mounted) return;
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -52,12 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
           password: password.text.trim(),
         );
 
-        if (!mounted) return;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (_) => ProfileScreen(role: widget.role, uid: cred.user!.uid),
-          ),
-        );
+        // Removed navigation to ProfileScreen after login
+        // Let AuthGate handle routing
       }
     } on FirebaseAuthException catch (e) {
       setState(() => error = 'CODE: ${e.code}\nMSG: ${e.message}');
