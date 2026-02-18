@@ -32,6 +32,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         'notes': notes.text.trim(),
         'status': 'PENDING',
         'createdAt': DateTime.now().toIso8601String(),
+        'productName': product['name'] ?? '',
+        'productPrice': product['price'] ?? '',
+        'unit': product['unit'] ?? '',
       });
 
       if (!mounted) return;
