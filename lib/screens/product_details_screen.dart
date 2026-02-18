@@ -23,9 +23,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     setState(() => sending = true);
     try {
       final buyerId = FirebaseAuth.instance.currentUser!.uid;
+      print('Sending request to farmerId: ${product['farmerId']}');
       await fs.requestsCol().add({
         'productId': widget.productId,
-        'farmerId': product['farmerId'],
+        'farmerId': product['farmerId'] ?? product['uid'],
         'buyerId': buyerId,
         'qty': qty.text.trim(),
         'notes': notes.text.trim(),
@@ -54,7 +55,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final s = AppLocalizations.of(context)!;
-
 
     return Scaffold(
       appBar: AppBar(),
