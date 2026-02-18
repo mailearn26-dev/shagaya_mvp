@@ -52,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+  debugPrint("HOME_SCREEN_BUILD: marketplace appbar actions active");
+
     final s = AppLocalizations.of(context)!;
 
     if (role == null) {
@@ -84,18 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(s.marketplace),
         actions: [
           PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'en') {
-                ShagayaApp.setLocale(context, const Locale('en'));
-              } else if (value == 'ar') {
-                ShagayaApp.setLocale(context, const Locale('ar'));
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(value: 'en', child: Text('English')),
-              const PopupMenuItem(value: 'ar', child: Text('العربية')),
-            ],
-          ),
+  icon: const Icon(Icons.language),
+  onSelected: (value) {
+    if (value == 'en') {
+      ShagayaApp.setLocale(context, const Locale('en'));
+    } else if (value == 'ar') {
+      ShagayaApp.setLocale(context, const Locale('ar'));
+    }
+  },
+  itemBuilder: (context) => const [
+    PopupMenuItem(value: 'en', child: Text('English')),
+    PopupMenuItem(value: 'ar', child: Text('العربية')),
+  ],
+),
+
           IconButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const RequestsInboxScreen()),
