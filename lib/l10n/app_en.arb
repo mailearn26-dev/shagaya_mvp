@@ -1,0 +1,51 @@
+{
+  "@@locale": "en",
+  "appTitle": "Shagaya",
+  "roleTitle": "Choose your role",
+  "roleFarmer": "Farmer",
+  "roleStore": "Grocery Store",
+  "roleConsumer": "Consumer",
+  "continueLabel": "Continue",
+
+  "loginTitle": "Login",
+  "registerTitle": "Create account",
+  "email": "Email",
+  "password": "Password",
+  "signIn": "Sign in",
+  "signUp": "Sign up",
+  "logout": "Logout",
+
+  "profileTitle": "Profile",
+  "name": "Name",
+  "phone": "Phone (E.164 preferred)",
+  "governorate": "Governorate",
+  "area": "Area",
+  "save": "Save",
+  "gpsRecommended": "GPS is recommended for better matching (optional).",
+  "enableGps": "Enable GPS",
+  "skip": "Skip",
+
+  "marketplace": "Marketplace",
+  "addProduct": "Add product",
+  "productName": "Product name",
+  "pricePerUnit": "Price per unit",
+  "unit": "Unit (e.g., kg)",
+  "quantity": "Available quantity",
+  "publish": "Publish",
+
+  "request": "Request",
+  "requestQty": "Requested quantity",
+  "requestNotes": "Notes (optional)",
+  "sendRequest": "Send request",
+
+  "inbox": "Requests",
+  "statusPending": "PENDING",
+  "statusAccepted": "ACCEPTED",
+  "statusRejected": "REJECTED",
+  "accept": "Accept",
+  "reject": "Reject",
+
+  "contact": "Contact",
+  "whatsapp": "WhatsApp",
+  "call": "Call"
+}

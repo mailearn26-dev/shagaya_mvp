@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "517171824449",
+    "project_id": "shagaya-mvp",
+    "storage_bucket": "shagaya-mvp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517171824449:android:89ceb5d7697227913cc3c0",
+        "android_client_info": {
+          "package_name": "com.example.shagaya_mvp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR5kf8GsCz__9Z8K-v0aBduX2YrIBqD-o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

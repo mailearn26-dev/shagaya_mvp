@@ -1,0 +1,51 @@
+{
+  "@@locale": "ar",
+  "appTitle": "شجاية",
+  "roleTitle": "اختر نوع الحساب",
+  "roleFarmer": "مزارع",
+  "roleStore": "بقال / متجر",
+  "roleConsumer": "مستهلك",
+  "continueLabel": "متابعة",
+
+  "loginTitle": "تسجيل الدخول",
+  "registerTitle": "إنشاء حساب",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "signIn": "دخول",
+  "signUp": "تسجيل",
+  "logout": "تسجيل خروج",
+
+  "profileTitle": "الملف الشخصي",
+  "name": "الاسم",
+  "phone": "رقم الهاتف (يفضل بصيغة دولية)",
+  "governorate": "المحافظة",
+  "area": "المنطقة",
+  "save": "حفظ",
+  "gpsRecommended": "يُفضَّل تشغيل GPS لتحسين المطابقة (اختياري).",
+  "enableGps": "تشغيل GPS",
+  "skip": "تخطي",
+
+  "marketplace": "السوق",
+  "addProduct": "إضافة منتج",
+  "productName": "اسم المنتج",
+  "pricePerUnit": "السعر لكل وحدة",
+  "unit": "الوحدة (مثلاً كجم)",
+  "quantity": "الكمية المتاحة",
+  "publish": "نشر",
+
+  "request": "طلب",
+  "requestQty": "الكمية المطلوبة",
+  "requestNotes": "ملاحظات (اختياري)",
+  "sendRequest": "إرسال الطلب",
+
+  "inbox": "الطلبات",
+  "statusPending": "قيد الانتظار",
+  "statusAccepted": "مقبول",
+  "statusRejected": "مرفوض",
+  "accept": "قبول",
+  "reject": "رفض",
+
+  "contact": "تواصل",
+  "whatsapp": "واتساب",
+  "call": "اتصال"
+}
