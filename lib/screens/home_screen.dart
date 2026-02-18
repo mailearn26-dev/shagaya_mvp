@@ -7,6 +7,7 @@ import 'add_product_screen.dart';
 import 'requests_inbox_screen.dart';
 import 'product_details_screen.dart';
 import 'auth_gate.dart';
+import '../main.dart';
 
 const bool kDisableLocationFilterForMvp = true;
 
@@ -68,14 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
       if (area != null && area!.isNotEmpty) {
         q = q.where('area', isEqualTo: area);
       }
-      // Keep ordering only if it does not require indexes
       q = q.orderBy('createdAt', descending: true);
     } else {
       // Commenting out orderBy due to potential index requirement
       // q = q.orderBy('createdAt', descending: true);
     }
 
-    // Debug logging
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print('Current User - UID: $uid, Role: $role, Governorate: $governorate, Area: $area');
     print('Filters applied: ${!kDisableLocationFilterForMvp}');
@@ -84,6 +83,19 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(s.marketplace),
         actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'en') {
+                ShagayaApp.setLocale(context, const Locale('en'));
+              } else if (value == 'ar') {
+                ShagayaApp.setLocale(context, const Locale('ar'));
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(value: 'en', child: Text('English')),
+              const PopupMenuItem(value: 'ar', child: Text('العربية')),
+            ],
+          ),
           IconButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const RequestsInboxScreen()),
@@ -123,7 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (!snap.hasData) return const Center(child: CircularProgressIndicator());
                 final docs = snap.data!.docs;
 
-                // Debug logging for number of documents returned
                 print('Number of documents returned: ${docs.length}');
 
                 if (docs.isEmpty) return const Center(child: Text('No listings yet.'));
