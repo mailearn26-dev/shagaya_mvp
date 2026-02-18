@@ -40,6 +40,7 @@ class _RequestsInboxScreenState extends State<RequestsInboxScreen> {
     }
 
     final uid = FirebaseAuth.instance.currentUser!.uid;
+    final locale = Localizations.localeOf(context).languageCode;
 
     final stream = (role == 'farmer')
         ? fs.requestsCol().where('farmerId', isEqualTo: uid).orderBy('createdAt', descending: true).snapshots()
@@ -61,8 +62,13 @@ class _RequestsInboxScreenState extends State<RequestsInboxScreen> {
               final m = d.data();
               final status = (m['status'] ?? 'PENDING') as String;
 
+              final productName = locale == 'ar' 
+                  ? (m['productNameAr'] ?? '') 
+                  : (m['productNameEn'] ?? '');
+              final displayName = productName.isNotEmpty ? productName : d.id;
+
               return ListTile(
-                title: Text('Product: ${m['productName']}'),
+                title: Text('Product: $displayName'),
                 subtitle: Text('Qty: ${m['qty'] ?? ''} • $status'),
                 trailing: role == 'farmer'
                     ? Wrap(

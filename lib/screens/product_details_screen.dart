@@ -35,6 +35,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         'productName': product['name'] ?? '',
         'productPrice': product['price'] ?? '',
         'unit': product['unit'] ?? '',
+        'productNameEn': product['nameEn'] ?? product['name'] ?? '',
+        'productNameAr': product['nameAr'] ?? product['name_ar'] ?? product['name'] ?? '',
       });
 
       if (!mounted) return;
