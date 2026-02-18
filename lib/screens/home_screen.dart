@@ -8,6 +8,8 @@ import 'requests_inbox_screen.dart';
 import 'product_details_screen.dart';
 import 'auth_gate.dart';
 
+const bool kDisableLocationFilterForMvp = true;
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -57,14 +59,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final canAddProduct = role == 'farmer';
 
-    Query<Map<String, dynamic>> q = fs.productsCol().orderBy('createdAt', descending: true);
+    Query<Map<String, dynamic>> q = fs.productsCol();
 
-    if (governorate != null && governorate!.isNotEmpty) {
-      q = q.where('governorate', isEqualTo: governorate);
+    if (!kDisableLocationFilterForMvp) {
+      if (governorate != null && governorate!.isNotEmpty) {
+        q = q.where('governorate', isEqualTo: governorate);
+      }
+      if (area != null && area!.isNotEmpty) {
+        q = q.where('area', isEqualTo: area);
+      }
+      // Keep ordering only if it does not require indexes
+      q = q.orderBy('createdAt', descending: true);
+    } else {
+      // Commenting out orderBy due to potential index requirement
+      // q = q.orderBy('createdAt', descending: true);
     }
-    if (area != null && area!.isNotEmpty) {
-      q = q.where('area', isEqualTo: area);
-    }
+
+    // Debug logging
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    print('Current User - UID: $uid, Role: $role, Governorate: $governorate, Area: $area');
+    print('Filters applied: ${!kDisableLocationFilterForMvp}');
 
     return Scaffold(
       appBar: AppBar(
@@ -93,29 +107,46 @@ class _HomeScreenState extends State<HomeScreen> {
               label: Text(s.addProduct),
             )
           : null,
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: q.snapshots(),
-        builder: (context, snap) {
-          if (!snap.hasData) return const Center(child: CircularProgressIndicator());
-          final docs = snap.data!.docs;
-          if (docs.isEmpty) return const Center(child: Text('No listings yet.'));
-          return ListView.separated(
-            itemCount: docs.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
-            itemBuilder: (context, i) {
-              final d = docs[i];
-              final m = d.data();
-              return ListTile(
-                title: Text((m['name'] ?? '') as String),
-                subtitle: Text('${m['price'] ?? ''} / ${m['unit'] ?? ''} • Qty: ${m['qty'] ?? ''}'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => ProductDetailsScreen(productId: d.id)),
-                ),
-              );
-            },
-          );
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              kDisableLocationFilterForMvp ? 'Filter: ALL' : 'Filter: governorate/area',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: q.snapshots(),
+              builder: (context, snap) {
+                if (!snap.hasData) return const Center(child: CircularProgressIndicator());
+                final docs = snap.data!.docs;
+
+                // Debug logging for number of documents returned
+                print('Number of documents returned: ${docs.length}');
+
+                if (docs.isEmpty) return const Center(child: Text('No listings yet.'));
+                return ListView.separated(
+                  itemCount: docs.length,
+                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  itemBuilder: (context, i) {
+                    final d = docs[i];
+                    final m = d.data();
+                    return ListTile(
+                      title: Text((m['name'] ?? '') as String),
+                      subtitle: Text('${m['price'] ?? ''} / ${m['unit'] ?? ''} • Qty: ${m['qty'] ?? ''}'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => ProductDetailsScreen(productId: d.id)),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
