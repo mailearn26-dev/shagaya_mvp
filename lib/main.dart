@@ -12,8 +12,21 @@ void main() async {
   runApp(const ShagayaApp());
 }
 
-class ShagayaApp extends StatelessWidget {
+class ShagayaApp extends StatefulWidget {
   const ShagayaApp({super.key});
+
+  @override
+  State<ShagayaApp> createState() => _ShagayaAppState();
+}
+
+class _ShagayaAppState extends State<ShagayaApp> {
+  Locale? _locale;
+
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +34,7 @@ class ShagayaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       // Localization
+      locale: _locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -29,7 +43,7 @@ class ShagayaApp extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
 
-      home: const AuthGate(),
+      home: AuthGate(setLocale: setLocale),
     );
   }
 }
