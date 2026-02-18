@@ -76,12 +76,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               final farmer = farmerSnap.data!.data() ?? {};
               final farmerPhone = (farmer['phone'] ?? '') as String;
 
+              final productName = Localizations.localeOf(context).languageCode == 'ar'
+                  ? (product['nameAr'] ?? product['name'] ?? '')
+                  : (product['nameEn'] ?? product['name'] ?? '');
+
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: ListView(
                   children: [
-                    Text((product['name'] ?? '') as String,
-                        style: Theme.of(context).textTheme.headlineSmall),
+                    Text(productName, style: Theme.of(context).textTheme.headlineSmall),
                     const SizedBox(height: 8),
                     Text('${product['price']} / ${product['unit']}'),
                     const SizedBox(height: 8),
@@ -112,7 +115,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ? null
                                 : () => _launchWhatsApp(
                                       farmerPhone,
-                                      'Hello, I am interested in ${product['name']}. Qty: ${qty.text.trim().isEmpty ? 'N/A' : qty.text.trim()}',
+                                      'Hello, I am interested in ${productName}. Qty: ${qty.text.trim().isEmpty ? 'N/A' : qty.text.trim()}',
                                     ),
                             icon: const Icon(Icons.chat),
                             label: Text(s.whatsapp),

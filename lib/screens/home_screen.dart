@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-  debugPrint("HOME_SCREEN_BUILD: marketplace appbar actions active");
+    debugPrint("HOME_SCREEN_BUILD: marketplace appbar actions active");
 
     final s = AppLocalizations.of(context)!;
 
@@ -86,20 +86,19 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(s.marketplace),
         actions: [
           PopupMenuButton<String>(
-  icon: const Icon(Icons.language),
-  onSelected: (value) {
-    if (value == 'en') {
-      ShagayaApp.setLocale(context, const Locale('en'));
-    } else if (value == 'ar') {
-      ShagayaApp.setLocale(context, const Locale('ar'));
-    }
-  },
-  itemBuilder: (context) => const [
-    PopupMenuItem(value: 'en', child: Text('English')),
-    PopupMenuItem(value: 'ar', child: Text('العربية')),
-  ],
-),
-
+            icon: const Icon(Icons.language),
+            onSelected: (value) {
+              if (value == 'en') {
+                ShagayaApp.setLocale(context, const Locale('en'));
+              } else if (value == 'ar') {
+                ShagayaApp.setLocale(context, const Locale('ar'));
+              }
+            },
+            itemBuilder: (context) => const [
+              PopupMenuItem(value: 'en', child: Text('English')),
+              PopupMenuItem(value: 'ar', child: Text('العربية')),
+            ],
+          ),
           IconButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const RequestsInboxScreen()),
@@ -148,8 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, i) {
                     final d = docs[i];
                     final m = d.data();
+                    final productName = Localizations.localeOf(context).languageCode == 'ar'
+                        ? (m['nameAr'] ?? m['name'] ?? '')
+                        : (m['nameEn'] ?? m['name'] ?? '');
                     return ListTile(
-                      title: Text((m['name'] ?? '') as String),
+                      title: Text(productName),
                       subtitle: Text('${m['price'] ?? ''} / ${m['unit'] ?? ''} • Qty: ${m['qty'] ?? ''}'),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.of(context).push(

@@ -12,7 +12,8 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final fs = FirestoreService();
-  final name = TextEditingController();
+  final nameEn = TextEditingController();
+  final nameAr = TextEditingController();
   final price = TextEditingController();
   final unit = TextEditingController(text: 'kg');
   final qty = TextEditingController();
@@ -31,7 +32,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
       final userDoc = await fs.userDoc(uid).get();
       final u = userDoc.data() ?? {};
 
-      if (name.text.trim().isEmpty ||
+      if (nameEn.text.trim().isEmpty ||
+          nameAr.text.trim().isEmpty ||
           price.text.trim().isEmpty ||
           unit.text.trim().isEmpty ||
           qty.text.trim().isEmpty) {
@@ -41,7 +43,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       await fs.productsCol().add({
         'farmerId': uid,
-        'name': name.text.trim(),
+        'name': nameEn.text.trim(), // Default name
+        'nameEn': nameEn.text.trim(),
+        'nameAr': nameAr.text.trim(),
         'price': double.tryParse(price.text.trim()) ?? price.text.trim(),
         'unit': unit.text.trim(),
         'qty': double.tryParse(qty.text.trim()) ?? qty.text.trim(),
@@ -69,7 +73,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            TextField(controller: name, decoration: InputDecoration(labelText: s.productName)),
+            TextField(controller: nameEn, decoration: InputDecoration(labelText: 'Product Name (English)')),
+            const SizedBox(height: 12),
+            TextField(controller: nameAr, decoration: InputDecoration(labelText: 'Product Name (Arabic)')),
             const SizedBox(height: 12),
             TextField(controller: price, decoration: InputDecoration(labelText: s.pricePerUnit), keyboardType: TextInputType.number),
             const SizedBox(height: 12),
