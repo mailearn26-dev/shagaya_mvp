@@ -32,11 +32,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         'notes': notes.text.trim(),
         'status': 'PENDING',
         'createdAt': DateTime.now().toIso8601String(),
-        'productName': product['name'] ?? '',
-        'productPrice': product['price'] ?? '',
-        'unit': product['unit'] ?? '',
-        'productNameEn': product['nameEn'] ?? product['name'] ?? '',
-        'productNameAr': product['nameAr'] ?? product['name_ar'] ?? product['name'] ?? '',
+        'productNameEn': product['nameEn'] ?? '',
+        'productNameAr': product['nameAr'] ?? '',
+        'productUnit': product['unit'] ?? '',
       });
 
       if (!mounted) return;
@@ -84,7 +82,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding: const EdgeInsets.all(16),
                 child: ListView(
                   children: [
-                    Text(productName, style: Theme.of(context).textTheme.headlineSmall),
+                    Text(productName.isNotEmpty ? productName : s.unknownProduct, style: Theme.of(context).textTheme.headlineSmall),
                     const SizedBox(height: 8),
                     Text('${product['price']} / ${product['unit']}'),
                     const SizedBox(height: 8),

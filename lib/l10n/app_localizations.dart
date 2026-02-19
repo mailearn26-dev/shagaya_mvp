@@ -346,6 +346,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Call'**
   String get call;
+
+  /// No description provided for @unknownProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown product'**
+  String get unknownProduct;
+
+  /// No description provided for @productNameEn.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name (English)'**
+  String get productNameEn;
+
+  /// No description provided for @productNameAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name (Arabic)'**
+  String get productNameAr;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -364,8 +382,6 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ar': return AppLocalizationsAr();

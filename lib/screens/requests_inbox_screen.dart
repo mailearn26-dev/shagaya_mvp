@@ -60,15 +60,13 @@ class _RequestsInboxScreenState extends State<RequestsInboxScreen> {
             itemBuilder: (context, i) {
               final d = docs[i];
               final m = d.data();
+              final productName = locale == 'ar' 
+                  ? (m['productNameAr'] ?? s.unknownProduct) 
+                  : (m['productNameEn'] ?? s.unknownProduct);
               final status = (m['status'] ?? 'PENDING') as String;
 
-              final productName = locale == 'ar' 
-                  ? (m['productNameAr'] ?? '') 
-                  : (m['productNameEn'] ?? '');
-              final displayName = productName.isNotEmpty ? productName : d.id;
-
               return ListTile(
-                title: Text('Product: $displayName'),
+                title: Text('Product: $productName'),
                 subtitle: Text('Qty: ${m['qty'] ?? ''} • $status'),
                 trailing: role == 'farmer'
                     ? Wrap(

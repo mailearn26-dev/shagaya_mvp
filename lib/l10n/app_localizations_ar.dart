@@ -1,4 +1,3 @@
-// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
@@ -133,4 +132,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get call => 'اتصال';
+
+  @override
+  String get unknownProduct => 'منتج غير معروف';
+
+  @override
+  String get productNameEn => 'اسم المنتج (بالإنجليزية)';
+
+  @override
+  String get productNameAr => 'اسم المنتج (بالعربية)';
 }
