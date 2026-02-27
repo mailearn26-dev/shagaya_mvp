@@ -151,7 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? (m['nameAr'] ?? m['name'] ?? '')
                         : (m['nameEn'] ?? m['name'] ?? '');
                     return ListTile(
-                      title: Text(productName.isNotEmpty ? productName : s.unknownProduct),
+                      leading: _ProductThumb(imageUrl: (m['imageUrl'] ?? '').toString()),
+title: Text(productName.isNotEmpty ? productName : s.unknownProduct),
                       subtitle: Text('${m['price'] ?? ''} / ${m['unit'] ?? ''} • Qty: ${m['qty'] ?? ''}'),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.of(context).push(
