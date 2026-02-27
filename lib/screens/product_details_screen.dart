@@ -97,25 +97,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       product['imageUrl'] ?? '',
                       height: 200,
                       fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    (loadingProgress.expectedTotalBytes ?? 1)
-                                : null,
-                          ),
-                        );
-                      },
-                      errorBuilder: (BuildContext context, Object error,
-                          StackTrace? stackTrace) {
-                        return Container(
-                          color: Colors.grey,
-                          child: const Icon(Icons.broken_image),
-                        );
-                      },
+                      loadingBuilder:
+                          (
+                            BuildContext context,
+                            Widget child,
+                            ImageChunkEvent? loadingProgress,
+                          ) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value:
+                                    loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                          (loadingProgress.expectedTotalBytes ??
+                                              1)
+                                    : null,
+                              ),
+                            );
+                          },
+                      errorBuilder:
+                          (
+                            BuildContext context,
+                            Object error,
+                            StackTrace? stackTrace,
+                          ) {
+                            return Container(
+                              color: Colors.grey,
+                              child: const Icon(Icons.broken_image),
+                            );
+                          },
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -126,7 +136,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Text('${product['price']} / ${product['unit']}'),
                     const SizedBox(height: 8),
                     Text('Qty: ${product['qty']}'),
-                    if (product['farmerId'] == FirebaseAuth.instance.currentUser!.uid)
+                    if (product['farmerId'] ==
+                        FirebaseAuth.instance.currentUser!.uid)
                       FilledButton(
                         onPressed: () => _editProduct(product),
                         child: Text(s.editProduct),
