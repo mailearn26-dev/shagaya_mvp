@@ -18,6 +18,17 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+class _ProductThumb extends StatelessWidget {
+  final String imageUrl;
+
+  const _ProductThumb({Key? key, required this.imageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(imageUrl, fit: BoxFit.cover);
+  }
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   final fs = FirestoreService();
   String? role;
@@ -152,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         : (m['nameEn'] ?? m['name'] ?? '');
                     return ListTile(
                       leading: _ProductThumb(imageUrl: (m['imageUrl'] ?? '').toString()),
-title: Text(productName.isNotEmpty ? productName : s.unknownProduct),
+                      title: Text(productName.isNotEmpty ? productName : s.unknownProduct),
                       subtitle: Text('${m['price'] ?? ''} / ${m['unit'] ?? ''} • Qty: ${m['qty'] ?? ''}'),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.of(context).push(
