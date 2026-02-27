@@ -17,7 +17,6 @@ class StorageService {
 
     final ref = _storage.ref().child('products/$productId/$name.$ext');
 
-
     final metadata = SettableMetadata(contentType: _contentType(ext));
     await ref.putFile(file, metadata);
 

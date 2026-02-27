@@ -78,7 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    print('Current User - UID: $uid, Role: $role, Governorate: $governorate, Area: $area');
+    print(
+      'Current User - UID: $uid, Role: $role, Governorate: $governorate, Area: $area',
+    );
     print('Filters applied: ${!kDisableLocationFilterForMvp}');
 
     return Scaffold(
@@ -127,7 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              kDisableLocationFilterForMvp ? 'Filter: ALL' : 'Filter: governorate/area',
+              kDisableLocationFilterForMvp
+                  ? 'Filter: ALL'
+                  : 'Filter: governorate/area',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -135,28 +139,39 @@ class _HomeScreenState extends State<HomeScreen> {
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: q.snapshots(),
               builder: (context, snap) {
-                if (!snap.hasData) return const Center(child: CircularProgressIndicator());
+                if (!snap.hasData)
+                  return const Center(child: CircularProgressIndicator());
                 final docs = snap.data!.docs;
 
                 print('Number of documents returned: ${docs.length}');
 
-                if (docs.isEmpty) return const Center(child: Text('No listings yet.'));
+                if (docs.isEmpty)
+                  return const Center(child: Text('No listings yet.'));
                 return ListView.separated(
                   itemCount: docs.length,
                   separatorBuilder: (_, __) => const Divider(height: 1),
                   itemBuilder: (context, i) {
                     final d = docs[i];
                     final m = d.data();
-                    final productName = Localizations.localeOf(context).languageCode == 'ar'
+                    final productName =
+                        Localizations.localeOf(context).languageCode == 'ar'
                         ? (m['nameAr'] ?? m['name'] ?? '')
                         : (m['nameEn'] ?? m['name'] ?? '');
                     return ListTile(
-                      leading: _ProductThumb(imageUrl: (m['imageUrl'] ?? '').toString()),
-                      title: Text(productName.isNotEmpty ? productName : s.unknownProduct),
-                      subtitle: Text('${m['price'] ?? ''} / ${m['unit'] ?? ''} • Qty: ${m['qty'] ?? ''}'),
+                      leading: _ProductThumb(
+                        imageUrl: (m['imageUrl'] ?? '').toString(),
+                      ),
+                      title: Text(
+                        productName.isNotEmpty ? productName : s.unknownProduct,
+                      ),
+                      subtitle: Text(
+                        '${m['price'] ?? ''} / ${m['unit'] ?? ''} • Qty: ${m['qty'] ?? ''}',
+                      ),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => ProductDetailsScreen(productId: d.id)),
+                        MaterialPageRoute(
+                          builder: (_) => ProductDetailsScreen(productId: d.id),
+                        ),
                       ),
                     );
                   },
@@ -178,10 +193,7 @@ class _ProductThumb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrl == null || imageUrl.trim().isEmpty) {
-      return Container(
-        color: Colors.grey,
-        child: const Icon(Icons.image),
-      );
+      return Container(color: Colors.grey, child: const Icon(Icons.image));
     } else {
       return Image.network(imageUrl, fit: BoxFit.cover);
     }

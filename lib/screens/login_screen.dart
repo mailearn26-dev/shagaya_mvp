@@ -38,13 +38,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
         // Create user document after successful registration
         final fs = FirestoreService();
-        await fs.ensureUserDoc(uid: cred.user!.uid, email: email.text.trim(), role: widget.role);
-        
+        await fs.ensureUserDoc(
+          uid: cred.user!.uid,
+          email: email.text.trim(),
+          role: widget.role,
+        );
+
         // Navigate to ProfileScreen after sign up
         if (!mounted) return;
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => ProfileScreen(role: widget.role, uid: cred.user!.uid),
+            builder: (_) =>
+                ProfileScreen(role: widget.role, uid: cred.user!.uid),
           ),
         );
       } else {
@@ -76,7 +81,10 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(controller: email, decoration: InputDecoration(labelText: s.email)),
+            TextField(
+              controller: email,
+              decoration: InputDecoration(labelText: s.email),
+            ),
             const SizedBox(height: 12),
             TextField(
               controller: password,
@@ -84,14 +92,19 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: true,
             ),
             const SizedBox(height: 12),
-            if (error != null) Text(error!, style: const TextStyle(color: Colors.red)),
+            if (error != null)
+              Text(error!, style: const TextStyle(color: Colors.red)),
             const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               child: FilledButton(
                 onPressed: loading ? null : _submit,
                 child: loading
-                    ? const SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                    ? const SizedBox(
+                        height: 18,
+                        width: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
                     : Text(isRegister ? s.signUp : s.signIn),
               ),
             ),

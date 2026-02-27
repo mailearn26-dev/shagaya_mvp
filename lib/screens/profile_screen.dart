@@ -36,14 +36,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     var perm = await Geolocator.checkPermission();
-    if (perm == LocationPermission.denied) perm = await Geolocator.requestPermission();
+    if (perm == LocationPermission.denied)
+      perm = await Geolocator.requestPermission();
 
-    if (perm == LocationPermission.denied || perm == LocationPermission.deniedForever) {
+    if (perm == LocationPermission.denied ||
+        perm == LocationPermission.deniedForever) {
       setState(() => error = 'Location permission denied.');
       return;
     }
 
-    final pos = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+    final pos = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.medium,
+    );
     setState(() {
       lat = pos.latitude;
       lng = pos.longitude;
@@ -99,13 +103,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            TextField(controller: name, decoration: InputDecoration(labelText: s.name)),
+            TextField(
+              controller: name,
+              decoration: InputDecoration(labelText: s.name),
+            ),
             const SizedBox(height: 12),
-            TextField(controller: phone, decoration: InputDecoration(labelText: s.phone)),
+            TextField(
+              controller: phone,
+              decoration: InputDecoration(labelText: s.phone),
+            ),
             const SizedBox(height: 12),
-            TextField(controller: governorate, decoration: InputDecoration(labelText: s.governorate)),
+            TextField(
+              controller: governorate,
+              decoration: InputDecoration(labelText: s.governorate),
+            ),
             const SizedBox(height: 12),
-            TextField(controller: area, decoration: InputDecoration(labelText: s.area)),
+            TextField(
+              controller: area,
+              decoration: InputDecoration(labelText: s.area),
+            ),
             const SizedBox(height: 12),
 
             Text(s.gpsRecommended),
@@ -114,7 +130,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 OutlinedButton(onPressed: _getGps, child: Text(s.enableGps)),
                 const SizedBox(width: 12),
-                if (lat != null && lng != null) Expanded(child: Text('GPS: $lat, $lng')),
+                if (lat != null && lng != null)
+                  Expanded(child: Text('GPS: $lat, $lng')),
               ],
             ),
 
@@ -127,7 +144,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             FilledButton(
               onPressed: loading ? null : _save,
               child: loading
-                  ? const SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                  ? const SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
                   : Text(s.save),
             ),
           ],

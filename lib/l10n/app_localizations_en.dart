@@ -65,7 +65,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save => 'Save';
 
   @override
-  String get gpsRecommended => 'GPS is recommended for better matching (optional).';
+  String get gpsRecommended =>
+      'GPS is recommended for better matching (optional).';
 
   @override
   String get enableGps => 'Enable GPS';

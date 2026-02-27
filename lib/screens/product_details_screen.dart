@@ -38,7 +38,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       });
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Request sent.')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Request sent.')));
     } finally {
       setState(() => sending = false);
     }
@@ -46,7 +48,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Future<void> _launchWhatsApp(String phone, String message) async {
     final normalized = phone.replaceAll('+', '').replaceAll(' ', '');
-    final url = Uri.parse('https://wa.me/$normalized?text=${Uri.encodeComponent(message)}');
+    final url = Uri.parse(
+      'https://wa.me/$normalized?text=${Uri.encodeComponent(message)}',
+    );
     await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
@@ -64,17 +68,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         future: fs.productsCol().doc(widget.productId).get(),
         builder: (context, snap) {
-          if (!snap.hasData) return const Center(child: CircularProgressIndicator());
+          if (!snap.hasData)
+            return const Center(child: CircularProgressIndicator());
           final product = snap.data!.data() ?? {};
 
           return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             future: fs.userDoc(product['farmerId']).get(),
             builder: (context, farmerSnap) {
-              if (!farmerSnap.hasData) return const Center(child: CircularProgressIndicator());
+              if (!farmerSnap.hasData)
+                return const Center(child: CircularProgressIndicator());
               final farmer = farmerSnap.data!.data() ?? {};
               final farmerPhone = (farmer['phone'] ?? '') as String;
 
-              final productName = Localizations.localeOf(context).languageCode == 'ar'
+              final productName =
+                  Localizations.localeOf(context).languageCode == 'ar'
                   ? (product['nameAr'] ?? product['name'] ?? '')
                   : (product['nameEn'] ?? product['name'] ?? '');
 
@@ -82,28 +89,47 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding: const EdgeInsets.all(16),
                 child: ListView(
                   children: [
-                    Text(productName.isNotEmpty ? productName : s.unknownProduct, style: Theme.of(context).textTheme.headlineSmall),
+                    Text(
+                      productName.isNotEmpty ? productName : s.unknownProduct,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
                     const SizedBox(height: 8),
                     Text('${product['price']} / ${product['unit']}'),
                     const SizedBox(height: 8),
                     Text('Qty: ${product['qty']}'),
                     const Divider(height: 24),
 
-                    Text(s.request, style: Theme.of(context).textTheme.titleMedium),
+                    Text(
+                      s.request,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     const SizedBox(height: 8),
-                    TextField(controller: qty, decoration: InputDecoration(labelText: s.requestQty)),
+                    TextField(
+                      controller: qty,
+                      decoration: InputDecoration(labelText: s.requestQty),
+                    ),
                     const SizedBox(height: 8),
-                    TextField(controller: notes, decoration: InputDecoration(labelText: s.requestNotes)),
+                    TextField(
+                      controller: notes,
+                      decoration: InputDecoration(labelText: s.requestNotes),
+                    ),
                     const SizedBox(height: 12),
                     FilledButton(
                       onPressed: sending ? null : () => _sendRequest(product),
                       child: sending
-                          ? const SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                          ? const SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
                           : Text(s.sendRequest),
                     ),
 
                     const Divider(height: 24),
-                    Text(s.contact, style: Theme.of(context).textTheme.titleMedium),
+                    Text(
+                      s.contact,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
@@ -112,9 +138,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             onPressed: farmerPhone.isEmpty
                                 ? null
                                 : () => _launchWhatsApp(
-                                      farmerPhone,
-                                      'Hello, I am interested in ${productName}. Qty: ${qty.text.trim().isEmpty ? 'N/A' : qty.text.trim()}',
-                                    ),
+                                    farmerPhone,
+                                    'Hello, I am interested in ${productName}. Qty: ${qty.text.trim().isEmpty ? 'N/A' : qty.text.trim()}',
+                                  ),
                             icon: const Icon(Icons.chat),
                             label: Text(s.whatsapp),
                           ),
@@ -122,7 +148,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: OutlinedButton.icon(
-                            onPressed: farmerPhone.isEmpty ? null : () => _call(farmerPhone),
+                            onPressed: farmerPhone.isEmpty
+                                ? null
+                                : () => _call(farmerPhone),
                             icon: const Icon(Icons.call),
                             label: Text(s.call),
                           ),

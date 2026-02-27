@@ -34,7 +34,9 @@ class _ShagayaAppState extends State<ShagayaApp> {
 
   void _toggleLocale() {
     setState(() {
-      _locale = _locale.languageCode == 'en' ? const Locale('ar') : const Locale('en');
+      _locale = _locale.languageCode == 'en'
+          ? const Locale('ar')
+          : const Locale('en');
     });
   }
 
@@ -44,23 +46,14 @@ class _ShagayaAppState extends State<ShagayaApp> {
       debugShowCheckedModeBanner: false,
       title: 'Shagaya',
       locale: _locale,
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
+      supportedLocales: const [Locale('en'), Locale('ar')],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.green,
-      ),
-      home: RoleSelectPage(
-        onToggleLocale: _toggleLocale,
-        locale: _locale,
-      ),
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.green),
+      home: RoleSelectPage(onToggleLocale: _toggleLocale, locale: _locale),
     );
   }
 }
@@ -117,21 +110,24 @@ class RoleSelectPage extends StatelessWidget {
                 title: t('Farmer', 'مزارع'),
                 subtitle: t('Sell crops directly', 'بيع المحاصيل مباشرة'),
                 icon: Icons.agriculture,
-                onTap: () => _toast(context, t('Farmer selected', 'تم اختيار مزارع')),
+                onTap: () =>
+                    _toast(context, t('Farmer selected', 'تم اختيار مزارع')),
               ),
               const SizedBox(height: 12),
               _RoleCard(
                 title: t('Consumer', 'مستهلك'),
                 subtitle: t('Buy from farmers', 'الشراء من المزارعين'),
                 icon: Icons.shopping_basket,
-                onTap: () => _toast(context, t('Consumer selected', 'تم اختيار مستهلك')),
+                onTap: () =>
+                    _toast(context, t('Consumer selected', 'تم اختيار مستهلك')),
               ),
               const SizedBox(height: 12),
               _RoleCard(
                 title: t('Grocery Store', 'محل / تاجر'),
                 subtitle: t('Buy in larger quantities', 'شراء بكميات أكبر'),
                 icon: Icons.storefront,
-                onTap: () => _toast(context, t('Grocery selected', 'تم اختيار تاجر')),
+                onTap: () =>
+                    _toast(context, t('Grocery selected', 'تم اختيار تاجر')),
               ),
             ],
           ),
@@ -170,10 +166,7 @@ class _RoleCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 22,
-                child: Icon(icon),
-              ),
+              CircleAvatar(radius: 22, child: Icon(icon)),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
@@ -181,7 +174,10 @@ class _RoleCard extends StatelessWidget {
                   children: [
                     Text(title, style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 4),
-                    Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+                    Text(
+                      subtitle,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ],
                 ),
               ),
