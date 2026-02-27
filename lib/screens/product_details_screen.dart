@@ -121,6 +121,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Text(
                       productName.isNotEmpty ? productName : s.unknownProduct,
                       style: Theme.of(context).textTheme.headlineSmall,
+                    ),
                     const SizedBox(height: 8),
                     Text('${product['price']} / ${product['unit']}'),
                     const SizedBox(height: 8),
