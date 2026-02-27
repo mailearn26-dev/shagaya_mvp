@@ -15,6 +15,9 @@ class StorageService {
 
     final ref = _storage.ref().child('products/$productId/$name.$ext');
 
+    print('Bucket: ${_storage.bucket}');
+    print('Full path: ${ref.fullPath}');
+
     final metadata = SettableMetadata(contentType: _contentType(ext));
     await ref.putFile(file, metadata);
 
