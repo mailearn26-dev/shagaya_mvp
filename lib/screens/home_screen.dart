@@ -177,6 +177,13 @@ class _ProductThumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(imageUrl, fit: BoxFit.cover);
+    if (imageUrl == null || imageUrl.trim().isEmpty) {
+      return Container(
+        color: Colors.grey,
+        child: const Icon(Icons.image),
+      );
+    } else {
+      return Image.network(imageUrl, fit: BoxFit.cover);
+    }
   }
 }
