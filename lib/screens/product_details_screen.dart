@@ -15,6 +15,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final fs = FirestoreService();
+  late AppLocalizations s;
   final qty = TextEditingController();
   final notes = TextEditingController();
   bool sending = false;
@@ -65,7 +66,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final s = AppLocalizations.of(context)!;
+    s = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(),
@@ -140,7 +141,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         FirebaseAuth.instance.currentUser!.uid)
                       FilledButton(
                         onPressed: () => _editProduct(product),
-                        child: Text(s.editProduct),
+                        child: Text(AppLocalizations.of(context)!.editProduct),
                       ),
 
                     Text(

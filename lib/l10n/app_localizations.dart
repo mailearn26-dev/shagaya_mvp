@@ -350,7 +350,47 @@ abstract class AppLocalizations {
   /// **'Call'**
   String get call;
 
-  /// No description provided for @unknownProduct.
+  /// No description provided for @selectImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an image'**
+  String get selectImage;
+
+  /// No description provided for @changeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change image'**
+  String get changeImage;
+
+  /// No description provided for @editProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit product'**
+  String get editProduct;
+
+  /// No description provided for @fillAllFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all fields'**
+  String get fillAllFields;
+
+  /// No description provided for @priceMustBeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Price must be a number'**
+  String get priceMustBeNumber;
+
+  /// No description provided for @quantityMustBeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity must be a number'**
+  String get quantityMustBeNumber;
+
+  /// No description provided for @imageUploadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Image upload failed'**
+  String get imageUploadFailed;
   ///
   /// In en, this message translates to:
   /// **'Unknown product'**

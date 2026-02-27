@@ -135,6 +135,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get call => 'Call';
 
   @override
+  String get selectImage => 'Select an image';
+
+  @override
+  String get changeImage => 'Change image';
+
+  @override
+  String get editProduct => 'Edit product';
+
+  @override
+  String get fillAllFields => 'Please fill all fields';
+
+  @override
+  String get priceMustBeNumber => 'Price must be a number';
+
+  @override
+  String get quantityMustBeNumber => 'Quantity must be a number';
+
+  @override
+  String get imageUploadFailed => 'Image upload failed';
+
+  @override
   String get unknownProduct => 'Unknown product';
 
   @override

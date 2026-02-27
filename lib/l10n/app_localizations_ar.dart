@@ -134,6 +134,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get call => 'اتصال';
 
   @override
+  String get selectImage => 'اختر صورة';
+
+  @override
+  String get changeImage => 'تغيير الصورة';
+
+  @override
+  String get editProduct => 'تعديل المنتج';
+
+  @override
+  String get fillAllFields => 'يرجى ملء جميع الحقول';
+
+  @override
+  String get priceMustBeNumber => 'يجب أن يكون السعر رقماً';
+
+  @override
+  String get quantityMustBeNumber => 'يجب أن تكون الكمية رقماً';
+
+  @override
+  String get imageUploadFailed => 'فشل تحميل الصورة';
+
+  @override
   String get unknownProduct => 'منتج غير معروف';
 
   @override

@@ -17,6 +17,7 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final fs = FirestoreService();
+  late AppLocalizations s;
 
   final nameEn = TextEditingController();
   final nameAr = TextEditingController();
@@ -75,24 +76,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
           price.text.trim().isEmpty ||
           unitValue.isEmpty ||
           qty.text.trim().isEmpty) {
-        setState(() => _error = s.fillAllFields);
+        setState(() => _error = AppLocalizations.of(context)!.fillAllFields);
         return;
       }
 
       if (_selectedImage == null) {
-        setState(() => _error = s.selectImage);
+        setState(() => _error = AppLocalizations.of(context)!.selectImage);
         return;
       }
 
       final parsedPrice = double.tryParse(price.text.trim());
       if (parsedPrice == null) {
-        setState(() => _error = s.priceMustBeNumber);
+        setState(() => _error = AppLocalizations.of(context)!.priceMustBeNumber);
         return;
       }
 
       final parsedQty = double.tryParse(qty.text.trim());
       if (parsedQty == null) {
-        setState(() => _error = s.quantityMustBeNumber);
+        setState(() => _error = AppLocalizations.of(context)!.quantityMustBeNumber);
         return;
       }
 
@@ -131,7 +132,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         await productRef.update({'imageUrl': imageUrl});
       } catch (e) {
         await productRef.delete();
-        setState(() => _error = s.imageUploadFailed);
+        setState(() => _error = AppLocalizations.of(context)!.imageUploadFailed);
         return;
       }
 
@@ -146,7 +147,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final s = AppLocalizations.of(context)!;
+    s = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(title: Text(s.addProduct)),
