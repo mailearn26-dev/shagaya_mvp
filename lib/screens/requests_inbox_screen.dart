@@ -43,15 +43,24 @@ class _RequestsInboxScreenState extends State<RequestsInboxScreen> {
     final locale = Localizations.localeOf(context).languageCode;
 
     final stream = (role == 'farmer')
-        ? fs.requestsCol().where('farmerId', isEqualTo: uid).orderBy('createdAt', descending: true).snapshots()
-        : fs.requestsCol().where('buyerId', isEqualTo: uid).orderBy('createdAt', descending: true).snapshots();
+        ? fs
+              .requestsCol()
+              .where('farmerId', isEqualTo: uid)
+              .orderBy('createdAt', descending: true)
+              .snapshots()
+        : fs
+              .requestsCol()
+              .where('buyerId', isEqualTo: uid)
+              .orderBy('createdAt', descending: true)
+              .snapshots();
 
     return Scaffold(
       appBar: AppBar(title: Text(s.inbox)),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: stream,
         builder: (context, snap) {
-          if (!snap.hasData) return const Center(child: CircularProgressIndicator());
+          if (!snap.hasData)
+            return const Center(child: CircularProgressIndicator());
           final docs = snap.data!.docs;
           if (docs.isEmpty) return const Center(child: Text('No requests.'));
           return ListView.separated(
@@ -60,8 +69,8 @@ class _RequestsInboxScreenState extends State<RequestsInboxScreen> {
             itemBuilder: (context, i) {
               final d = docs[i];
               final m = d.data();
-              final productName = locale == 'ar' 
-                  ? (m['productNameAr'] ?? s.unknownProduct) 
+              final productName = locale == 'ar'
+                  ? (m['productNameAr'] ?? s.unknownProduct)
                   : (m['productNameEn'] ?? s.unknownProduct);
               final status = (m['status'] ?? 'PENDING') as String;
 
@@ -73,11 +82,15 @@ class _RequestsInboxScreenState extends State<RequestsInboxScreen> {
                         spacing: 8,
                         children: [
                           TextButton(
-                            onPressed: status == 'ACCEPTED' ? null : () => _setStatus(d.id, 'ACCEPTED'),
+                            onPressed: status == 'ACCEPTED'
+                                ? null
+                                : () => _setStatus(d.id, 'ACCEPTED'),
                             child: Text(s.accept),
                           ),
                           TextButton(
-                            onPressed: status == 'REJECTED' ? null : () => _setStatus(d.id, 'REJECTED'),
+                            onPressed: status == 'REJECTED'
+                                ? null
+                                : () => _setStatus(d.id, 'REJECTED'),
                             child: Text(s.reject),
                           ),
                         ],

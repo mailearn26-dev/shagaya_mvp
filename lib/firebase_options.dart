@@ -83,5 +83,4 @@ class DefaultFirebaseOptions {
     authDomain: 'shagaya-mvp.firebaseapp.com',
     storageBucket: 'shagaya-mvp.firebasestorage.app',
   );
-
 }
