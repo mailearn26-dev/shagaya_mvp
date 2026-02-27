@@ -10,16 +10,19 @@ class StorageService {
     required File file,
     required String productId,
   }) async {
+    print("Firebase bucket: ${FirebaseStorage.instance.bucket}");
     final ext = _guessExtension(file.path);
     final name = const Uuid().v4();
 
     final ref = _storage.ref().child('products/$productId/$name.$ext');
 
+    print("Upload path: ${ref.fullPath}");
     print('Bucket: ${_storage.bucket}');
     print('Full path: ${ref.fullPath}');
 
     final metadata = SettableMetadata(contentType: _contentType(ext));
     await ref.putFile(file, metadata);
+    print("Upload completed successfully");
 
     return ref.getDownloadURL();
   }
