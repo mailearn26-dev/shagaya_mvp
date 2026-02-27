@@ -87,13 +87,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       final parsedPrice = double.tryParse(price.text.trim());
       if (parsedPrice == null) {
-        setState(() => _error = AppLocalizations.of(context)!.priceMustBeNumber);
+        setState(
+          () => _error = AppLocalizations.of(context)!.priceMustBeNumber,
+        );
         return;
       }
 
       final parsedQty = double.tryParse(qty.text.trim());
       if (parsedQty == null) {
-        setState(() => _error = AppLocalizations.of(context)!.quantityMustBeNumber);
+        setState(
+          () => _error = AppLocalizations.of(context)!.quantityMustBeNumber,
+        );
         return;
       }
 
@@ -132,7 +136,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
         await productRef.update({'imageUrl': imageUrl});
       } catch (e) {
         await productRef.delete();
-        setState(() => _error = AppLocalizations.of(context)!.imageUploadFailed);
+        setState(
+          () => _error = AppLocalizations.of(context)!.imageUploadFailed,
+        );
         return;
       }
 
