@@ -34,7 +34,7 @@ class StorageService {
     if (lower.endsWith('.png')) return 'png';
     if (lower.endsWith('.webp')) return 'webp';
     return 'jpg';
-    }
+  }
 
   String _contentType(String ext) {
     switch (ext) {
