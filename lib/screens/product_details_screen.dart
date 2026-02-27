@@ -22,6 +22,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Future<void> _editProduct(Map<String, dynamic> product) async {
     // Implement product editing logic here
   }
+
+  Future<void> _sendRequest(Map<String, dynamic> product) async {
     setState(() => sending = true);
     try {
       final buyerId = FirebaseAuth.instance.currentUser!.uid;
@@ -91,9 +93,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding: const EdgeInsets.all(16),
                 child: ListView(
                   children: [
-                    Text(
-                      productName.isNotEmpty ? productName : s.unknownProduct,
-                      style: Theme.of(context).textTheme.headlineSmall,
+                    Image.network(
+                      product['imageUrl'] ?? '',
+                      height: 200,
+                      fit: BoxFit.cover,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -113,6 +116,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           child: const Icon(Icons.broken_image),
                         );
                       },
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      productName.isNotEmpty ? productName : s.unknownProduct,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     const SizedBox(height: 8),
                     Text('${product['price']} / ${product['unit']}'),
                     const SizedBox(height: 8),
