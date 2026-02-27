@@ -21,7 +21,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final nameEn = TextEditingController();
   final nameAr = TextEditingController();
   final price = TextEditingController();
-  final unit = TextEditingController(text: 'kg');
+  final unit = TextEditingController(text: 'KG');
+  final List<String> amountOptions = ['Kilogram', 'Ton'];
+  String selectedAmount = 'Kilogram';
   final qty = TextEditingController();
 
   File? _selectedImage;
@@ -73,24 +75,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
           price.text.trim().isEmpty ||
           unitValue.isEmpty ||
           qty.text.trim().isEmpty) {
-        setState(() => _error = 'Fill all fields.');
+        setState(() => _error = s.fillAllFields);
         return;
       }
 
       if (_selectedImage == null) {
-        setState(() => _error = 'Please select an image.');
+        setState(() => _error = s.selectImage);
         return;
       }
 
       final parsedPrice = double.tryParse(price.text.trim());
       if (parsedPrice == null) {
-        setState(() => _error = 'Price must be a number.');
+        setState(() => _error = s.priceMustBeNumber);
         return;
       }
 
       final parsedQty = double.tryParse(qty.text.trim());
       if (parsedQty == null) {
-        setState(() => _error = 'Quantity must be a number.');
+        setState(() => _error = s.quantityMustBeNumber);
         return;
       }
 
@@ -119,13 +121,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
       });
 
       // 2) Upload image
-      final imageUrl = await StorageService().uploadProductImage(
-        file: _selectedImage!,
-        productId: productRef.id,
-      );
+      try {
+        final imageUrl = await StorageService().uploadProductImage(
+          file: _selectedImage!,
+          productId: productRef.id,
+        );
 
-      // 3) Update product doc with final image URL
-      await productRef.update({'imageUrl': imageUrl});
+        // 3) Update product doc with final image URL
+        await productRef.update({'imageUrl': imageUrl});
+      } catch (e) {
+        await productRef.delete();
+        setState(() => _error = s.imageUploadFailed);
+        return;
+      }
 
       if (!mounted) return;
       Navigator.of(context).pop();
@@ -166,8 +174,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 12),
-            TextField(
-              controller: unit,
+            DropdownButtonFormField<String>(
+              value: selectedAmount,
+              items: amountOptions.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  selectedAmount = newValue!;
+                });
+              },
               decoration: InputDecoration(labelText: s.unit),
             ),
             const SizedBox(height: 12),
@@ -183,7 +202,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ? TextButton.icon(
                     onPressed: _submitting ? null : _pickImage,
                     icon: const Icon(Icons.image),
-                    label: const Text('Select Image'),
+                    label: Text(s.selectImage),
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -198,7 +217,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                       TextButton(
                         onPressed: _submitting ? null : _pickImage,
-                        child: const Text('Change Image'),
+                        child: Text(s.changeImage),
                       ),
                     ],
                   ),

@@ -19,7 +19,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final notes = TextEditingController();
   bool sending = false;
 
-  Future<void> _sendRequest(Map<String, dynamic> product) async {
+  Future<void> _editProduct(Map<String, dynamic> product) async {
+    // Implement product editing logic here
+  }
     setState(() => sending = true);
     try {
       final buyerId = FirebaseAuth.instance.currentUser!.uid;
@@ -92,12 +94,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Text(
                       productName.isNotEmpty ? productName : s.unknownProduct,
                       style: Theme.of(context).textTheme.headlineSmall,
-                    ),
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    (loadingProgress.expectedTotalBytes ?? 1)
+                                : null,
+                          ),
+                        );
+                      },
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return Container(
+                          color: Colors.grey,
+                          child: const Icon(Icons.broken_image),
+                        );
+                      },
                     const SizedBox(height: 8),
                     Text('${product['price']} / ${product['unit']}'),
                     const SizedBox(height: 8),
                     Text('Qty: ${product['qty']}'),
-                    const Divider(height: 24),
+                    if (product['farmerId'] == FirebaseAuth.instance.currentUser!.uid)
+                      FilledButton(
+                        onPressed: () => _editProduct(product),
+                        child: Text(s.editProduct),
+                      ),
 
                     Text(
                       s.request,
