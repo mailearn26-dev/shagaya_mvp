@@ -18,17 +18,6 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _ProductThumb extends StatelessWidget {
-  final String imageUrl;
-
-  const _ProductThumb({Key? key, required this.imageUrl}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(imageUrl, fit: BoxFit.cover);
-  }
-}
-
 class _HomeScreenState extends State<HomeScreen> {
   final fs = FirestoreService();
   String? role;
@@ -178,5 +167,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+}
+
+class _ProductThumb extends StatelessWidget {
+  final String imageUrl;
+
+  const _ProductThumb({Key? key, required this.imageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(imageUrl, fit: BoxFit.cover);
   }
 }
